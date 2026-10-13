@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#f3f6f4" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0d1312" media="(prefers-color-scheme: dark)" />
+  <link rel="icon" href="data:," />
+  <title>Research &amp; Deliverables Library</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap');
+
+    :root {
+      color-scheme: light dark;
+      --bg: #f3f6f4;
+      --surface: #ffffff;
+      --surface-2: #e8efec;
+      --ink: #17211f;
+      --muted: #57635f;
+      --line: #cad5d0;
+      --accent: #0b6755;
+      --accent-ink: #ffffff;
+      --warm: #c87f17;
+      --warm-soft: #fff1d5;
+      --audio-bg: #16342e;
+      --audio-ink: #f1f8f5;
+      --shadow: 0 14px 36px rgba(20, 42, 36, .09);
+      --focus: #146eec;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0d1312;
+        --surface: #131c1a;
+        --surface-2: #1b2724;
+        --ink: #edf4f1;
+        --muted: #a7b5b0;
+        --line: #34443f;
+        --accent: #63c9b1;
+        --accent-ink: #06251e;
+        --warm: #efb95e;
+        --warm-soft: #392d19;
+        --audio-bg: #0b2924;
+        --audio-ink: #f0faf7;
+        --shadow: 0 18px 46px rgba(0, 0, 0, .26);
+        --focus: #72a7ff;
+      }
+    }
+
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Source Sans 3", sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, input { font: inherit; }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .shell { width: min(1180px, calc(100% - 44px)); margin: 0 auto; }
+
+    .intro {
+      padding: clamp(52px, 8vw, 96px) 0 32px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 32px;
+      border-bottom: 1px solid var(--line);
+    }
+    h1, h2, h3 { font-family: "Source Serif 4", serif; }
+    h1 {
+      max-width: 800px;
+      margin: 0;
+      font-size: clamp(2.7rem, 7vw, 5.25rem);
+      line-height: .94;
+      letter-spacing: -.052em;
+      text-wrap: balance;
+    }
+    .intro-copy { margin: 20px 0 0; max-width: 720px; color: var(--muted); font-size: clamp(1.05rem, 2vw, 1.22rem); }
+    .updated { margin: 0 0 8px; color: var(--muted); text-align: right; }
+    .stats { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+    .stat {
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 650;
+      font-size: .88rem;
+      white-space: nowrap;
+    }
+
+    .feed {
+      margin-top: 28px;
+      padding: clamp(22px, 4vw, 34px);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 28px;
+      align-items: center;
+      color: var(--audio-ink);
+      background: var(--audio-bg);
+      border-radius: 18px 18px 6px 18px;
+      box-shadow: var(--shadow);
+    }
+    .feed-kicker { margin: 0 0 5px; color: var(--warm); font-weight: 750; font-size: .8rem; letter-spacing: .05em; text-transform: uppercase; }
+    .feed h2 { margin: 0; font-size: clamp(1.6rem, 3vw, 2.2rem); letter-spacing: -.025em; }
+    .feed p:not(.feed-kicker) { margin: 8px 0 0; max-width: 700px; color: rgba(241,248,245,.74); }
+    .feed-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 9px; }
+    .feed .action.secondary { color: var(--audio-ink); border-color: rgba(255,255,255,.32); }
+    .copy-status { min-height: 1.4em; margin-top: 6px !important; font-size: .82rem; text-align: right; }
+
+    .tools { padding: 28px 0 15px; }
+    .search-wrap { position: relative; display: block; max-width: 620px; }
+    .search-wrap svg { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--muted); }
+    #search {
+      width: 100%;
+      height: 50px;
+      padding: 0 18px 0 47px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--surface);
+      color: var(--ink);
+    }
+    #search::placeholder { color: var(--muted); }
+    .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .tab {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 9px 15px;
+      font-weight: 650;
+      cursor: pointer;
+    }
+    .tab:hover { border-color: var(--accent); color: var(--accent); }
+    .tab[aria-selected="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+
+    .result-line { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin: 16px 0 18px; }
+    .result-line h2 { margin: 0; font-size: clamp(1.55rem, 3vw, 2.15rem); letter-spacing: -.025em; }
+    #count { color: var(--muted); font-size: .92rem; white-space: nowrap; }
+
+    .library { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; padding-bottom: 72px; }
+    .item {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      border-radius: 18px;
+    }
+    .cover-wrap {
+      height: 214px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--line);
+    }
+    .cover { display: block; width: 100%; height: 100%; object-fit: contain; }
+    .podcast .cover { object-fit: cover; }
+    .item-body { padding: 20px 21px 22px; display: flex; flex: 1; flex-direction: column; min-width: 0; }
+    .meta { display: flex; flex-wrap: wrap; gap: 7px 9px; align-items: center; color: var(--muted); font-size: .8rem; }
+    .type { color: var(--accent); font-weight: 750; letter-spacing: .025em; text-transform: uppercase; }
+    .dot::before { content: "•"; margin-right: 9px; }
+    .item h3 { margin: 8px 0 8px; font-size: 1.34rem; line-height: 1.14; letter-spacing: -.024em; }
+    .item p { margin: 0; color: var(--muted); font-size: .94rem; }
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 18px; }
+    .action {
+      appearance: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-height: 40px;
+      padding: 8px 13px;
+      border-radius: 9px;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: inherit;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: .88rem;
+      cursor: pointer;
+    }
+    .action.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+    .action.secondary:hover { color: var(--accent); border-color: var(--accent); }
+    .action svg { flex: 0 0 auto; }
+    audio { width: 100%; height: 38px; margin-top: 16px; color-scheme: dark; }
+
+    .empty { display: none; padding: 54px 22px 76px; text-align: center; color: var(--muted); border-top: 1px solid var(--line); }
+    .empty h3 { margin: 0 0 7px; color: var(--ink); font-size: 1.5rem; }
+    .empty.visible { display: block; }
+    footer { border-top: 1px solid var(--line); padding: 26px 0 42px; color: var(--muted); font-size: .9rem; }
+    footer p { margin: 0; }
+
+    @media (max-width: 940px) { .library { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 28px, 1180px); }
+      .intro { grid-template-columns: 1fr; padding-top: 46px; gap: 14px; }
+      .updated { text-align: left; }
+      .stats { justify-content: flex-start; }
+      .feed { grid-template-columns: 1fr; gap: 18px; border-radius: 16px 16px 5px 16px; }
+      .feed-actions { justify-content: flex-start; }
+      .copy-status { text-align: left; }
+    }
+    @media (max-width: 610px) {
+      .library { grid-template-columns: 1fr; }
+      .cover-wrap { height: 230px; }
+      .action { flex: 1 1 auto; }
+    }
+    @media (max-width: 420px) {
+      .shell { width: min(100% - 20px, 1180px); }
+      h1 { font-size: 2.55rem; }
+      .item { border-radius: 14px; }
+      .cover-wrap { height: 205px; }
+      .tab { padding: 8px 11px; font-size: .9rem; }
+      .item-body { padding: 18px 18px 20px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    @media print {
+      body { background: white; color: black; }
+      .tools, .actions, audio, .feed-actions { display: none !important; }
+      .library { grid-template-columns: repeat(2, 1fr); }
+      .item { break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="shell intro">
+    <div>
+      <h1>Your complete research library</h1>
+      <p class="intro-copy">Every report, presentation, podcast, and episode companion created so far — including all 15 Gemini source reports, their decks and annotated bibliographies, and the combined research synthesis — in one searchable place.</p>
+    </div>
+    <div>
+      <p class="updated">Updated October 11, 2026</p>
+      <div class="stats" aria-label="Library summary">
+        <span class="stat">84 deliverables</span>
+        <span class="stat">51 PDFs</span>
+        <span class="stat">24 decks</span>
+        <span class="stat">9 podcasts</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="feed" aria-labelledby="feed-title">
+      <div>
+        <p class="feed-kicker">Podcast feed</p>
+        <h2 id="feed-title">Jimmy’s AI Research</h2>
+        <p>Subscribe once to get the podcast collection in your player. The feed link is public to anyone who has it.</p>
+      </div>
+      <div>
+        <div class="feed-actions">
+          <a class="action primary" href="https://muse.ai/podcasts/feed/1390487444146439/398096d5-0bd7-4c00-9275-da47837f3283" target="_blank" rel="noopener">Open RSS <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+          <button class="action secondary" id="copy-feed" type="button">Copy feed URL</button>
+        </div>
+        <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="tools" aria-label="Filter library">
+      <label class="search-wrap">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+        <input id="search" type="search" aria-label="Search deliverables" placeholder="Search titles, topics, or formats" autocomplete="off" />
+      </label>
+      <div class="tabs" role="tablist" aria-label="Deliverable groups">
+        <button class="tab" type="button" role="tab" aria-selected="true" data-filter="all">All</button>
+        <button class="tab" type="button" role="tab" aria-selected="false" data-filter="podcast">Podcasts</button>
+        <button class="tab" type="button" role="tab" aria-selected="false" data-filter="companion">Episode companions</button>
+        <button class="tab" type="button" role="tab" aria-selected="false" data-filter="research">Research</button>
+        <button class="tab" type="button" role="tab" aria-selected="false" data-filter="gemini">Gemini collection</button>
+        <button class="tab" type="button" role="tab" aria-selected="false" data-filter="gemini-source">Gemini source reports</button>
+        <button class="tab" type="button" role="tab" aria-selected="false" data-filter="gemini-bib">Gemini bibliographies</button>
+        <button class="tab" type="button" role="tab" aria-selected="false" data-filter="gemini-deck">Gemini decks</button>
+        <button class="tab" type="button" role="tab" aria-selected="false" data-filter="planning">Tax &amp; property</button>
+        <button class="tab" type="button" role="tab" aria-selected="false" data-filter="deck">Decks</button>
+      </div>
+    </section>
+
+    <div class="result-line">
+      <h2 id="section-title">All deliverables</h2>
+      <span id="count" aria-live="polite">52 items</span>
+    </div>
+
+    <section class="library" id="library" aria-labelledby="section-title"></section>
+    <section class="empty" id="empty" aria-live="polite">
+      <h3>No matching deliverables</h3>
+      <p>Try a broader search or choose another group.</p>
+    </section>
+  </main>
+
+  <footer><div class="shell"><p>Materials collected and prepared through October 11, 2026.</p></div></footer>
+
+  <script>
+    (function () {
+      var feedUrl = 'https://muse.ai/podcasts/feed/1390487444146439/398096d5-0bd7-4c00-9275-da47837f3283';
+      var items = [
+        { kind: 'Gemini synthesis', detail: 'PDF · 116 pages', title: 'AI Alignment — Combined Annotated Bibliography', desc: 'A deduplicated, reverse-chronological research map consolidating 486 source appearances into 396 distinct records across all 15 Gemini reports.', file: 'gemini-ai-alignment-combined-annotated-bibliography.pdf', cover: 'gemini-ai-alignment-combined-annotated-bibliography.jpg', cats: ['gemini','gemini-bib'], search: 'Gemini combined annotated bibliography 396 records 486 citations deduplicated chronological synthesis' },
+        { kind: 'Gemini overview deck', detail: 'PowerPoint · 399 slides', title: 'AI Alignment — 396-Paper Overview Deck', desc: 'A one-page overview of every distinct paper and source record in the combined bibliography, organized for rapid review and comparison.', file: 'gemini-ai-alignment-396-paper-overview-deck.pptx', cover: 'gemini-ai-alignment-396-paper-overview-deck.jpg', cats: ['gemini','gemini-deck','deck'], search: 'Gemini combined bibliography paper source overview 396 records presentation' },
+
+        { kind: 'Gemini annotated bibliography', detail: 'PDF · 13 pages', title: 'AI Alignment Academic Developments A — Annotated Bibliography', desc: 'A source-checked guide to 24 references behind the report’s claims on value alignment, reasoning models, benchmarks, and unresolved citations.', file: 'gemini-ai-alignment-academic-developments-a-annotated-bibliography.pdf', cover: 'gemini-ai-alignment-academic-developments-a-annotated-bibliography.jpg', cats: ['gemini','gemini-bib'], search: 'academic developments A annotated bibliography value alignment 24 sources' },
+        { kind: 'Gemini presentation', detail: 'PowerPoint · 10 slides', title: 'AI Alignment Academic Developments A — Presentation Deck', desc: 'A concise visual synthesis of emerging value-alignment trajectories, from post-hoc control to reasoning and agentic systems.', file: 'gemini-ai-alignment-academic-developments-a-presentation-deck.pptx', cover: 'gemini-ai-alignment-academic-developments-a-presentation-deck.jpg', cats: ['gemini','gemini-deck','deck'], search: 'academic developments A value alignment reasoning agents presentation' },
+        { kind: 'Gemini annotated bibliography', detail: 'PDF · 14 pages', title: 'AI Alignment Academic Developments B — Annotated Bibliography', desc: 'Forty-eight annotated sources supporting the expanded review of 2025–2026 alignment research, evidence, and open questions.', file: 'gemini-ai-alignment-academic-developments-b-annotated-bibliography.pdf', cover: 'gemini-ai-alignment-academic-developments-b-annotated-bibliography.jpg', cats: ['gemini','gemini-bib'], search: 'academic developments B annotated bibliography 48 sources 2025 2026' },
+        { kind: 'Gemini presentation', detail: 'PowerPoint · 10 slides', title: 'AI Alignment Academic Developments B — Presentation Deck', desc: 'An expanded visual review of modern value alignment, its evidence base, and the limits of conventional helpfulness-and-harmlessness methods.', file: 'gemini-ai-alignment-academic-developments-b-presentation-deck.pptx', cover: 'gemini-ai-alignment-academic-developments-b-presentation-deck.jpg', cats: ['gemini','gemini-deck','deck'], search: 'academic developments B value alignment helpfulness harmlessness presentation' },
+
+        { kind: 'Gemini annotated bibliography', detail: 'PDF · 16 pages', title: 'Care Ethics & AI Alignment — Annotated Bibliography', desc: 'Forty-seven citations assessed for contribution, relevance, evidentiary strength, duplication, and limits in relational approaches to AI alignment.', file: 'gemini-care-ethics-annotated-bibliography.pdf', cover: 'gemini-care-ethics-annotated-bibliography.jpg', cats: ['gemini','gemini-bib'], search: 'care ethics annotated bibliography relational alignment 47 citations' },
+        { kind: 'Gemini presentation', detail: 'PowerPoint · 9 slides', title: 'Care Ethics & AI Alignment — Presentation Deck', desc: 'A visual treatment of care ethics, Tronto’s five-phase lifecycle, deceptive empathy risks, and implications for benchmark design.', file: 'gemini-care-ethics-presentation-deck.pptx', cover: 'gemini-care-ethics-presentation-deck.jpg', cats: ['gemini','gemini-deck','deck'], search: 'care ethics Tronto empathy benchmark presentation' },
+        { kind: 'Gemini annotated bibliography', detail: 'PDF · 8 pages', title: 'Deontological Ethics & AI Alignment — Annotated Bibliography', desc: 'A critical source guide spanning duties, rights, deontic logic, constitutional methods, and benchmarks for rule recognition and exceptions.', file: 'gemini-deontological-ethics-annotated-bibliography.pdf', cover: 'gemini-deontological-ethics-annotated-bibliography.jpg', cats: ['gemini','gemini-bib'], search: 'deontological ethics annotated bibliography duties rights rules constitutional methods' },
+        { kind: 'Gemini presentation', detail: 'PowerPoint · 10 slides', title: 'Deontological Ethics & AI Alignment — Presentation Deck', desc: 'A presentation on duty- and rule-based alignment, conflict handling, constitutional approaches, and deontological evaluation.', file: 'gemini-deontological-ethics-presentation-deck.pptx', cover: 'gemini-deontological-ethics-presentation-deck.jpg', cats: ['gemini','gemini-deck','deck'], search: 'deontological ethics duties rules constitutional AI presentation' },
+        { kind: 'Gemini annotated bibliography', detail: 'PDF · 12 pages', title: 'Human Rights & AI Alignment — Annotated Bibliography', desc: 'A source-by-source appraisal of 27 cited links, distinguishing peer-reviewed evidence from corporate material, commentary, duplicates, and weak references.', file: 'gemini-human-rights-annotated-bibliography.pdf', cover: 'gemini-human-rights-annotated-bibliography.jpg', cats: ['gemini','gemini-bib'], search: 'human rights UDHR annotated bibliography 27 sources source quality' },
+        { kind: 'Gemini presentation', detail: 'PowerPoint · 10 slides', title: 'Human Rights & AI Alignment — Presentation Deck', desc: 'A visual synthesis of UDHR-based alignment, democratic legitimacy, multilingual fragility, law-following agents, and dual-use risk.', file: 'gemini-human-rights-presentation-deck.pptx', cover: 'gemini-human-rights-presentation-deck.jpg', cats: ['gemini','gemini-deck','deck'], search: 'human rights UDHR democratic legitimacy multilingual law agents dual use presentation' },
+        { kind: 'Gemini annotated bibliography', detail: 'PDF · 21 pages', title: 'Kohlberg’s Framework for AI Benchmarking — Annotated Bibliography', desc: 'A 45-source guide to moral-development theory, stage-based reasoning, measurement choices, and applications to AI benchmarking.', file: 'gemini-kohlberg-theory-annotated-bibliography.pdf', cover: 'gemini-kohlberg-theory-annotated-bibliography.jpg', cats: ['gemini','gemini-bib'], search: 'Kohlberg theory moral development annotated bibliography 45 sources AI benchmarking' },
+        { kind: 'Gemini presentation', detail: 'PowerPoint · 14 slides', title: 'Kohlberg’s Framework for AI Benchmarking — Presentation Deck', desc: 'A visual guide to Kohlberg’s developmental stages and their use, limits, and measurement implications in AI evaluation.', file: 'gemini-kohlberg-theory-presentation-deck.pptx', cover: 'gemini-kohlberg-theory-presentation-deck.jpg', cats: ['gemini','gemini-deck','deck'], search: 'Kohlberg moral development stages AI benchmark presentation' },
+        { kind: 'Gemini annotated bibliography', detail: 'PDF · 14 pages', title: 'Magnificat Humanitas & AI Alignment — Annotated Bibliography', desc: 'Twenty-nine references assessed across theology, personhood, institutions, science, education, human dignity, and flourishing.', file: 'gemini-magnificat-humanitas-annotated-bibliography.pdf', cover: 'gemini-magnificat-humanitas-annotated-bibliography.jpg', cats: ['gemini','gemini-bib'], search: 'Magnificat Humanitas annotated bibliography 29 references anthropology dignity flourishing' },
+        { kind: 'Gemini presentation', detail: 'PowerPoint · 10 slides', title: 'Magnificat Humanitas & AI Alignment — Presentation Deck', desc: 'A presentation connecting technical alignment objectives with an anthropological account of personhood, dignity, and human flourishing.', file: 'gemini-magnificat-humanitas-presentation-deck.pptx', cover: 'gemini-magnificat-humanitas-presentation-deck.jpg', cats: ['gemini','gemini-deck','deck'], search: 'Magnificat Humanitas anthropology dignity flourishing presentation' },
+
+        { kind: 'Gemini annotated bibliography', detail: 'PDF · 14 pages', title: 'Moral Alignment Benchmarks A — Annotated Bibliography', desc: 'A quality map of 24 report references across 15 source families on normative ethics, moral pluralism, and procedural reasoning.', file: 'gemini-moral-alignment-benchmarks-a-annotated-bibliography.pdf', cover: 'gemini-moral-alignment-benchmarks-a-annotated-bibliography.jpg', cats: ['gemini','gemini-bib'], search: 'moral alignment benchmarks A annotated bibliography normative pluralism procedural 24 references' },
+        { kind: 'Gemini presentation', detail: 'PowerPoint · 11 slides', title: 'Moral Alignment Benchmarks A — Presentation Deck', desc: 'A visual synthesis of benchmark failure modes, moral pluralism, procedural reasoning, multi-agent effects, and deployment priorities.', file: 'gemini-moral-alignment-benchmarks-a-presentation-deck.pptx', cover: 'gemini-moral-alignment-benchmarks-a-presentation-deck.jpg', cats: ['gemini','gemini-deck','deck'], search: 'moral alignment benchmarks A pluralism procedural multi agent deployment presentation' },
+        { kind: 'Gemini annotated bibliography', detail: 'PDF · 10 pages', title: 'Moral Alignment Benchmarks B — Annotated Bibliography', desc: 'Thirteen primary and adjacent sources annotated for contribution, relevance, evidence status, and limitations in moral-alignment evaluation.', file: 'gemini-moral-alignment-benchmarks-b-annotated-bibliography.pdf', cover: 'gemini-moral-alignment-benchmarks-b-annotated-bibliography.jpg', cats: ['gemini','gemini-bib'], search: 'moral alignment benchmarks B annotated bibliography 13 sources evaluation' },
+        { kind: 'Gemini presentation', detail: 'PowerPoint · 10 slides', title: 'Moral Alignment Benchmarks B — Presentation Deck', desc: 'A presentation on the evolving benchmark landscape for moral reasoning in socially embedded and high-stakes model deployments.', file: 'gemini-moral-alignment-benchmarks-b-presentation-deck.pptx', cover: 'gemini-moral-alignment-benchmarks-b-presentation-deck.jpg', cats: ['gemini','gemini-deck','deck'], search: 'moral alignment benchmarks B LLM high stakes evaluation presentation' },
+        { kind: 'Gemini annotated bibliography', detail: 'PDF · 16 pages', title: 'Moral Foundations Theory & AI Benchmarking — Annotated Bibliography', desc: 'Fifty-one sources graded for evidentiary strength, with a practical checklist for designing Moral Foundations–based evaluations.', file: 'gemini-moral-foundations-annotated-bibliography.pdf', cover: 'gemini-moral-foundations-annotated-bibliography.jpg', cats: ['gemini','gemini-bib'], search: 'moral foundations theory annotated bibliography 51 sources benchmark checklist' },
+        { kind: 'Gemini presentation', detail: 'PowerPoint · 10 slides', title: 'Moral Foundations Theory & AI Benchmarking — Presentation Deck', desc: 'A visual guide to moral foundations, cross-cultural variation, measurement choices, and their use in machine-morality benchmarks.', file: 'gemini-moral-foundations-presentation-deck.pptx', cover: 'gemini-moral-foundations-presentation-deck.jpg', cats: ['gemini','gemini-deck','deck'], search: 'moral foundations theory cross cultural machine morality presentation' },
+        { kind: 'Gemini annotated bibliography', detail: 'PDF · 14 pages', title: 'Normative Ethics–Driven AI Alignment — Annotated Bibliography', desc: 'Twenty-seven cited items assessed across research papers, preprints, repositories, practitioner materials, and discovery sources.', file: 'gemini-normative-ethics-annotated-bibliography.pdf', cover: 'gemini-normative-ethics-annotated-bibliography.jpg', cats: ['gemini','gemini-bib'], search: 'normative ethics alignment annotated bibliography 27 sources' },
+        { kind: 'Gemini presentation', detail: 'PowerPoint · 11 slides', title: 'Normative Ethics–Driven AI Alignment — Presentation Deck', desc: 'A presentation on rationale alignment, reasoning-level reinforcement learning, pluralism, Rawlsian fairness, legal alignment, and multi-agent constitutions.', file: 'gemini-normative-ethics-presentation-deck.pptx', cover: 'gemini-normative-ethics-presentation-deck.jpg', cats: ['gemini','gemini-deck','deck'], search: 'normative ethics rationale alignment RL pluralism Rawls legal multi agent presentation' },
+        { kind: 'Gemini annotated bibliography', detail: 'PDF · 19 pages', title: 'Outer Alignment & Values Benchmarking — Annotated Bibliography', desc: 'A 27-source guide to evidentiary roles, best uses, interpretive limits, and unresolved links in outer-alignment benchmarking.', file: 'gemini-outer-alignment-annotated-bibliography.pdf', cover: 'gemini-outer-alignment-annotated-bibliography.jpg', cats: ['gemini','gemini-bib'], search: 'outer alignment values benchmarking annotated bibliography 27 sources' },
+        { kind: 'Gemini presentation', detail: 'PowerPoint · 10 slides', title: 'Outer Alignment & Values Benchmarking — Presentation Deck', desc: 'A presentation on proxy-objective failure, reward hacking, benchmark comparisons, belief consistency, and AI-judge bias.', file: 'gemini-outer-alignment-presentation-deck.pptx', cover: 'gemini-outer-alignment-presentation-deck.jpg', cats: ['gemini','gemini-deck','deck'], search: 'outer alignment reward hacking belief consistency AI judge bias presentation' },
+        { kind: 'Gemini annotated bibliography', detail: 'PDF · 16 pages', title: 'Schwartz Basic Human Values & AI Benchmarking — Annotated Bibliography', desc: 'Thirty-six sources annotated and weighted for their relevance to computational measurement of Schwartz’s basic human values.', file: 'gemini-schwartz-theory-annotated-bibliography.pdf', cover: 'gemini-schwartz-theory-annotated-bibliography.jpg', cats: ['gemini','gemini-bib'], search: 'Schwartz basic human values annotated bibliography 36 sources computational benchmark' },
+        { kind: 'Gemini presentation', detail: 'PowerPoint · 11 slides', title: 'Schwartz Basic Human Values & AI Benchmarking — Presentation Deck', desc: 'A visual introduction to Schwartz’s value structure and its use in evaluating model representations, tradeoffs, and behavior.', file: 'gemini-schwartz-theory-presentation-deck.pptx', cover: 'gemini-schwartz-theory-presentation-deck.jpg', cats: ['gemini','gemini-deck','deck'], search: 'Schwartz basic human values model benchmark presentation' },
+        { kind: 'Gemini annotated bibliography', detail: 'PDF · 22 pages', title: 'Utilitarian Ethics & AI Alignment — Annotated Bibliography', desc: 'Sixty-three cited items grouped by argument and assessed for contribution, limitations, evidentiary quality, and research value.', file: 'gemini-utilitarian-ethics-annotated-bibliography.pdf', cover: 'gemini-utilitarian-ethics-annotated-bibliography.jpg', cats: ['gemini','gemini-bib'], search: 'utilitarian ethics annotated bibliography 63 sources consequentialism wellbeing' },
+        { kind: 'Gemini presentation', detail: 'PowerPoint · 10 slides', title: 'Utilitarian Ethics & AI Alignment — Presentation Deck', desc: 'A presentation on expected utility, ETHICS and MACHIAVELLI benchmarks, RLHF, aggregation failures, CIRL, and safeguards.', file: 'gemini-utilitarian-ethics-presentation-deck.pptx', cover: 'gemini-utilitarian-ethics-presentation-deck.jpg', cats: ['gemini','gemini-deck','deck'], search: 'utilitarian ethics expected utility ETHICS MACHIAVELLI RLHF CIRL presentation' },
+        { kind: 'Gemini annotated bibliography', detail: 'PDF · 20 pages', title: 'Virtue Ethics & AI Alignment — Annotated Bibliography', desc: 'Sixteen critically assessed sources covering philosophical foundations, artificial virtue architectures, practical wisdom, objections, and moral benchmarks.', file: 'gemini-virtue-ethics-annotated-bibliography.pdf', cover: 'gemini-virtue-ethics-annotated-bibliography.jpg', cats: ['gemini','gemini-bib'], search: 'virtue ethics annotated bibliography 16 sources practical wisdom aretaic' },
+        { kind: 'Gemini presentation', detail: 'PowerPoint · 10 slides', title: 'Virtue Ethics & AI Alignment — Presentation Deck', desc: 'A presentation on aretaic alignment, technomoral virtues, moral habituation, artificial phronesis, and the ETHICS benchmark.', file: 'gemini-virtue-ethics-presentation-deck.pptx', cover: 'gemini-virtue-ethics-presentation-deck.jpg', cats: ['gemini','gemini-deck','deck'], search: 'virtue ethics aretaic technomoral phronesis ETHICS benchmark presentation' },
+
+        { kind: 'Gemini research', detail: 'PDF · 11 pages', title: 'The Maturation of Value Alignment in Artificial Intelligence', desc: 'A review of 2025–2026 research trajectories beyond monolithic post-hoc alignment, including reasoning models, agentic systems, and multi-agent settings.', file: 'gemini-ai-alignment-academic-developments-a-source-report.pdf', cover: 'gemini-ai-alignment-academic-developments-a-source-report.jpg', cats: ['gemini','gemini-source'], search: 'Gemini AI alignment academic developments value alignment RLHF reasoning models agents 2025 2026 report A 11 page' },
+        { kind: 'Gemini research', detail: 'PDF · 13 pages', title: 'The Maturation of Value Alignment — Expanded Review', desc: 'An expanded edition surveying specialized value-alignment domains and the limits of traditional helpfulness-and-harmlessness interventions.', file: 'gemini-ai-alignment-academic-developments-b-source-report.pdf', cover: 'gemini-ai-alignment-academic-developments-b-source-report.jpg', cats: ['gemini','gemini-source'], search: 'Gemini AI alignment academic developments value alignment RLHF reasoning models agents 2025 2026 report B 13 page expanded' },
+        { kind: 'Gemini research', detail: 'PDF · 13 pages', title: 'Moral Foundations Theory in AI Benchmarking', desc: 'How Moral Foundations Theory can structure empirical evaluation of machine moral reasoning across diverse ethical intuitions.', file: 'gemini-moral-foundations-benchmarking.pdf', cover: 'gemini-moral-foundations-benchmarking.jpg', cats: ['gemini','gemini-source'], search: 'Gemini moral foundations theory AI benchmarking machine morality ethics' },
+        { kind: 'Gemini research', detail: 'PDF · 14 pages', title: 'Schwartz Basic Human Values in AI Benchmarking', desc: 'A deep dive into the Schwartz theory of basic human values as a framework for measuring value representation and alignment in AI systems.', file: 'gemini-schwartz-values-benchmarking.pdf', cover: 'gemini-schwartz-values-benchmarking.jpg', cats: ['gemini','gemini-source'], search: 'Gemini Schwartz basic human values AI benchmarking motivations value representation' },
+        { kind: 'Gemini research', detail: 'PDF · 13 pages', title: 'Kohlberg’s Framework in AI Benchmarking', desc: 'An analysis of Kohlberg’s stages of moral development and their application to evaluating the ethical reasoning of large language models.', file: 'gemini-kohlberg-benchmarking.pdf', cover: 'gemini-kohlberg-benchmarking.jpg', cats: ['gemini','gemini-source'], search: 'Gemini Kohlberg moral development AI benchmarking ethical reasoning LLM' },
+        { kind: 'Gemini research', detail: 'PDF · 12 pages', title: 'Normative Ethics–Driven AI Alignment', desc: 'A review of 2025–2026 work applying normative ethical theories to large language models and autonomous agents beyond preference optimization alone.', file: 'gemini-normative-ethics-alignment.pdf', cover: 'gemini-normative-ethics-alignment.jpg', cats: ['gemini','gemini-source'], search: 'Gemini normative ethics alignment large language models agents preference optimization' },
+        { kind: 'Gemini research', detail: 'PDF · 14 pages', title: 'Virtue Ethics and AI Alignment', desc: 'An exploration of virtue ethics as an alignment framework centered on character, practical wisdom, and robust behavior in open-ended environments.', file: 'gemini-virtue-ethics-alignment.pdf', cover: 'gemini-virtue-ethics-alignment.jpg', cats: ['gemini','gemini-source'], search: 'Gemini virtue ethics aretaic AI alignment character practical wisdom' },
+        { kind: 'Gemini research', detail: 'PDF · 14 pages', title: 'Deontological Ethics in AI Alignment', desc: 'A study of duty-, rule-, and obligation-based approaches to machine morality, alignment, and benchmarking.', file: 'gemini-deontological-ethics-alignment.pdf', cover: 'gemini-deontological-ethics-alignment.jpg', cats: ['gemini','gemini-source'], search: 'Gemini deontological ethics AI alignment rules duties obligations benchmarking' },
+        { kind: 'Gemini research', detail: 'PDF · 14 pages', title: 'Utilitarian Ethics in AI Alignment', desc: 'A review of consequentialist approaches to AI alignment, from philosophical foundations to objective functions and evaluation benchmarks.', file: 'gemini-utilitarian-ethics-alignment.pdf', cover: 'gemini-utilitarian-ethics-alignment.jpg', cats: ['gemini','gemini-source'], search: 'Gemini utilitarian ethics consequentialism AI alignment wellbeing objective functions benchmarks' },
+        { kind: 'Gemini research', detail: 'PDF · 15 pages', title: 'Care Ethics and AI Alignment', desc: 'How relational ethics, dependency, context, and responsiveness can inform alignment and benchmarking beyond aggregate preferences and fixed rules.', file: 'gemini-care-ethics-alignment.pdf', cover: 'gemini-care-ethics-alignment.jpg', cats: ['gemini','gemini-source'], search: 'Gemini care ethics relational AI alignment benchmarking dependency context' },
+        { kind: 'Gemini research', detail: 'PDF · 12 pages', title: 'Human Rights as a Blueprint for AI Alignment', desc: 'An analysis of the Universal Declaration of Human Rights as a shared framework for aligning AI across cultures, institutions, and high-stakes domains.', file: 'gemini-human-rights-alignment.pdf', cover: 'gemini-human-rights-alignment.jpg', cats: ['gemini','gemini-source'], search: 'Gemini human rights UDHR AI alignment fairness accountability transparency ethics' },
+        { kind: 'Gemini research', detail: 'PDF · 13 pages', title: 'Magnificat Humanitas AI Alignment Research', desc: 'A review of an anthropological framework for AI alignment that connects technical objectives with human dignity and the meaning of human flourishing.', file: 'gemini-magnificat-humanitas-alignment.pdf', cover: 'gemini-magnificat-humanitas-alignment.jpg', cats: ['gemini','gemini-source'], search: 'Gemini Magnificat Humanitas anthropology human dignity flourishing AI alignment' },
+        { kind: 'Gemini research', detail: 'PDF · 12 pages', title: 'Outer Alignment and Values Benchmarking', desc: 'A survey of 2025–2026 advances in specifying human values, intent, and ethical boundaries for increasingly autonomous AI systems.', file: 'gemini-outer-alignment-benchmarks.pdf', cover: 'gemini-outer-alignment-benchmarks.jpg', cats: ['gemini','gemini-source'], search: 'Gemini outer alignment values benchmarking proxy objectives agents 2025 2026' },
+        { kind: 'Gemini research', detail: 'PDF · 14 pages', title: 'Moral Alignment Benchmarks for Large Language Models', desc: 'A review of the evolving outer-alignment benchmark landscape for moral reasoning in socially embedded and high-stakes model deployments.', file: 'gemini-moral-alignment-benchmarks-a-source-report.pdf', cover: 'gemini-moral-alignment-benchmarks-a-source-report.jpg', cats: ['gemini','gemini-source'], search: 'Gemini moral alignment benchmarks large language models outer alignment report A 14 page' },
+        { kind: 'Gemini research', detail: 'PDF · 12 pages', title: 'Normative Ethics, Pluralism, and Procedural Moral Reasoning', desc: 'An assessment of outer-alignment evaluation through normative ethics, pluralism, and procedural approaches to moral reasoning.', file: 'gemini-moral-alignment-benchmarks-b-source-report.pdf', cover: 'gemini-moral-alignment-benchmarks-b-source-report.jpg', cats: ['gemini','gemini-source'], search: 'Gemini moral alignment benchmarks normative ethics pluralism procedural reasoning report B 12 page' },
+
+        { kind: 'Investment screen', detail: 'PDF · 13 pages', title: 'San Mateo & Surrounding Rental Property Report', desc: 'A decision-oriented screen for near-term short-term rental use and eventual long-term operation, with a preference for multifamily assets and positive cash flow.', file: 'san-mateo-rental-property-report.pdf', cover: 'san-mateo-rental-property-report.jpg', cats: ['planning'], search: 'real estate rental multifamily short term long term cash flow San Mateo wife REP' },
+        { kind: 'Property report', detail: 'PDF · 10 pages', title: 'Peninsula STR Property Report', desc: 'Ten ranked leads across San Mateo County and nearby cities, with DSCR screening, city-level STR rules, and a 14-day diligence plan.', file: 'peninsula-str-property-report.pdf', cover: 'peninsula-str-property-report.jpg', cats: ['planning'], search: 'San Bruno Pacifica Half Moon Bay Redwood City short term rental listings DSCR' },
+        { kind: 'Planning brief', detail: 'PDF · 14 pages', title: '2026 Tax Mitigation Strategies', desc: 'A federal planning review of long-term rentals, short-term rentals, working interests, participation rules, and lower-risk alternatives for a high-W-2 household.', file: 'tax-mitigation-strategies-2026.pdf', cover: 'tax-mitigation-strategies-2026.jpg', cats: ['planning'], search: 'tax mitigation rental oil gas passive loss W-2' },
+        { kind: 'Planning playbook', detail: 'PDF · 18 pages', title: 'Creative Tax Deferral & Minimization Playbook', desc: 'California-aware strategies spanning STR participation, real-estate-professional status, cost segregation, PTE tax, 1031 exchanges, DSTs, opportunity zones, QSBS, and charitable planning.', file: 'creative-tax-strategies-2026.pdf', cover: 'creative-tax-strategies-2026.jpg', cats: ['planning'], search: 'creative tax REP cost segregation 1031 DST opportunity zones QSBS charitable' },
+        { kind: 'Tax strategy report', detail: 'PDF · 10 pages', title: 'Oil & Gas Tax Strategies', desc: 'Working interests, intangible drilling costs, bonus depreciation, depletion, loss limitations, AMT, California nonconformity, and execution steps.', file: 'oil-gas-tax-strategies.pdf', cover: 'oil-gas-tax-strategies.jpg', cats: ['planning'], search: 'IDC expensing intangible drilling costs working interest depletion California' },
+        { kind: 'Sponsor screen', detail: 'PDF · 15 pages', title: 'Oil & Gas Sponsor Due-Diligence Shortlist', desc: 'Ten companies and structures screened for legitimacy, operating evidence, performance evidence, red flags, and fit with a federal working-interest objective.', file: 'oil-gas-sponsor-due-diligence-shortlist.pdf', cover: 'oil-gas-sponsor-due-diligence-shortlist.jpg', cats: ['planning'], search: 'top 10 oil gas companies sponsors U.S. Energy MDS King Operating due diligence' },
+        { kind: 'Planning brief', detail: 'PDF · 13 pages', title: 'Stock-Option Tax Planning', desc: 'A public-data framework for coordinating exercise timing, AMT capacity, liquidity, portfolio risk, and officer-trading rules before an irreversible transaction.', file: 'jimmy-lin-stock-options-tax-report.pdf', cover: 'jimmy-lin-stock-options-tax-report.jpg', cats: ['planning'], search: 'Freenome FRNM stock option ISO NSO AMT exercise tax' },
+
+        { kind: 'Podcast', detail: 'MP3 · 8:13', title: 'Values Alignment: What Changed in the Last Year', desc: 'A concise spoken briefing on the most important recent developments in values alignment research.', file: 'values-alignment-what-changed-in-the-last-year-2026-10-10.mp3', cover: 'values-alignment-what-changed-in-the-last-year-2026-10-10.webp', cats: ['podcast'], search: 'audio short briefing latest developments' },
+        { kind: 'Podcast', detail: 'MP3 · 42:44', title: 'Values Alignment: The Long-Form Deep Dive', desc: 'A comprehensive narrative exploration of recent scholarship, central technical ideas, contested questions, and the emerging research agenda.', file: 'values-alignment-the-hour-long-deep-dive-2026-10-10.mp3', cover: 'values-alignment-the-hour-long-deep-dive-2026-10-10.webp', cats: ['podcast'], search: 'audio long form deep dive research' },
+        { kind: 'Podcast · Episode 1', detail: 'MP3 · 44:35', title: '101 Technical Alignment Methods', desc: 'One hundred and one methods across pretraining, feedback, oversight, interpretability, red-teaming, inference-time control, and multi-agent alignment.', file: '101-technical-alignment-methods-2026-10-10.mp3', cover: '101-technical-alignment-methods-2026-10-10.webp', cats: ['podcast'], search: 'technical alignment methods introduction RLHF constitutional AI' },
+        { kind: 'Podcast · Episode 2', detail: 'MP3 · 55:13', title: 'Technical Alignment Methods: Intermediate Topics', desc: 'A deeper treatment of preference learning, constitutional feedback, scalable oversight, interpretability, evaluation, steering, and robustness.', file: 'technical-alignment-methods-episode-2-intermediate-topics-2026-10-10.mp3', cover: 'technical-alignment-methods-episode-2-intermediate-topics-2026-10-10.webp', cats: ['podcast'], search: 'intermediate technical alignment preference learning oversight steering robustness' },
+        { kind: 'Podcast · Episode 3', detail: 'MP3 · 45:11', title: 'Technical Alignment Methods: Advanced Topics', desc: 'Deceptive alignment, corrigibility, sharp left turns, multi-agent dynamics, value learning, interpretability limits, and formal approaches.', file: 'technical-alignment-methods-episode-3-advanced-topics-2026-10-10.mp3', cover: 'technical-alignment-methods-episode-3-advanced-topics-2026-10-10.webp', cats: ['podcast'], search: 'advanced technical alignment deceptive corrigibility multi agent formal' },
+        { kind: 'Podcast · Episode 4', detail: 'MP3 · 49:10', title: 'Values Alignment Expanded', desc: 'An expanded discussion of how values are selected, encoded, learned, tested, governed, and revised in deployed AI systems.', file: 'values-alignment-expanded-2026-10-10.mp3', cover: 'values-alignment-expanded-2026-10-10.webp', cats: ['podcast'], search: 'values alignment expanded principles systems governance' },
+        { kind: 'Podcast · Episode 5', detail: 'MP3 · 54:44', title: 'Pluralistic Values Alignment Deep Dive', desc: 'Technical architectures, social-choice mechanisms, evaluation, and safeguards for representing legitimate disagreement.', file: 'pluralistic-values-alignment-deep-dive-2026-10-10.mp3', cover: 'pluralistic-values-alignment-deep-dive-2026-10-10.webp', cats: ['podcast'], search: 'pluralistic values social choice disagreement diversity' },
+        { kind: 'Podcast · Episode 6', detail: 'MP3 · 50:08', title: 'Legal Values Alignment & Grounded Constitutional Alignment', desc: 'How law, human reasons, precedent, and public institutions can turn abstract principles into auditable AI behavior.', file: 'legal-values-alignment-and-grounded-constitutional-alignment-2026-10-10.mp3', cover: 'legal-values-alignment-and-grounded-constitutional-alignment-2026-10-10.webp', cats: ['podcast'], search: 'legal grounded constitutional alignment law precedent institutions' },
+        { kind: 'Podcast', detail: 'MP3 · 55:27', title: 'Principles to Benchmarks: How Values Become Measurable', desc: 'A practical bridge from value statements, ethical principles, constitutions, and rights frameworks to auditable AI evaluations.', file: 'principles-to-benchmarks-how-values-become-measurable-2026-10-10.mp3', cover: 'principles-to-benchmarks-how-values-become-measurable-2026-10-10.webp', cats: ['podcast'], search: 'evaluation benchmark values measurable validity' },
+
+        { kind: 'Episode 1 companion', detail: 'PDF · 21 pages', title: '101 Technical Alignment Methods — Field Guide', desc: 'An introductory map of what each method does, where it fits, and what can still go wrong.', file: 'technical-alignment-methods-episode-1-field-guide.pdf', cover: 'technical-alignment-methods-episode-1-field-guide.jpg', cats: ['companion'], search: 'episode one report undergraduate field guide' },
+        { kind: 'Episode 1 companion', detail: 'PowerPoint · 28 slides', title: '101 Technical Alignment Methods — Deck', desc: 'The presentation companion to Episode 1, organized around ten method families and a practical selection guide.', file: 'technical-alignment-methods-episode-1-presentation-deck.pptx', cover: 'technical-alignment-methods-episode-1-presentation-deck.jpg', cats: ['companion','deck'], search: 'episode one presentation slides 101 methods' },
+        { kind: 'Episode 2 companion', detail: 'PDF · 19 pages', title: 'Intermediate Technical Alignment Methods — Report', desc: 'The machinery, assumptions, and failure modes behind preference learning, oversight, interpretability, steering, and robustness.', file: 'technical-alignment-methods-episode-2-companion-report.pdf', cover: 'technical-alignment-methods-episode-2-companion-report.jpg', cats: ['companion'], search: 'episode two report intermediate technical' },
+        { kind: 'Episode 2 companion', detail: 'PowerPoint · 14 slides', title: 'Intermediate Technical Alignment Methods — Deck', desc: 'A presentation companion on how intermediate alignment methods fit together and where they fail.', file: 'technical-alignment-methods-episode-2-presentation-deck.pptx', cover: 'technical-alignment-methods-episode-2-presentation-deck.jpg', cats: ['companion','deck'], search: 'episode two presentation slides intermediate' },
+        { kind: 'Episode 3 companion', detail: 'PDF · 19 pages', title: 'Advanced Technical Alignment — Report', desc: 'A research-seminar guide to frontier failures, corrigibility, multi-agent dynamics, value learning, interpretability, and formal guarantees.', file: 'technical-alignment-methods-episode-3-companion-report.pdf', cover: 'technical-alignment-methods-episode-3-companion-report.jpg', cats: ['companion'], search: 'episode three report advanced frontier failures' },
+        { kind: 'Episode 3 companion', detail: 'PowerPoint · 14 slides', title: 'Advanced Technical Alignment — Deck', desc: 'The presentation companion to the advanced episode, separating evidence from hypotheses and governance proposals.', file: 'technical-alignment-methods-episode-3-presentation-deck.pptx', cover: 'technical-alignment-methods-episode-3-presentation-deck.jpg', cats: ['companion','deck'], search: 'episode three presentation slides advanced' },
+        { kind: 'Episode 4 companion', detail: 'PDF · 16 pages', title: 'Values Alignment — Companion Report', desc: 'A practical and technical overview of how values are selected, encoded, learned, tested, governed, and revised.', file: 'values-alignment-episode-4-companion-report.pdf', cover: 'values-alignment-episode-4-companion-report.jpg', cats: ['companion'], search: 'episode four report values principles reliable systems' },
+        { kind: 'Episode 4 companion', detail: 'PowerPoint · 16 slides', title: 'Values Alignment — Episode 4 Deck', desc: 'A presentation-ready companion on values sources, system design, evaluation, deployment, and revision.', file: 'values-alignment-episode-4-presentation-deck.pptx', cover: 'values-alignment-episode-4-presentation-deck.jpg', cats: ['companion','deck'], search: 'episode four presentation slides values alignment' },
+        { kind: 'Episode 5 companion', detail: 'PDF · 14 pages', title: 'Pluralistic Values Alignment — Report', desc: 'Technical architectures, social-choice mechanisms, evaluation, and safeguards for governed diversity.', file: 'pluralistic-values-alignment-episode-5-companion-report.pdf', cover: 'pluralistic-values-alignment-episode-5-companion-report.jpg', cats: ['companion'], search: 'episode five report pluralistic social choice' },
+        { kind: 'Episode 5 companion', detail: 'PowerPoint · 17 slides', title: 'Pluralistic Values Alignment — Deck', desc: 'A visual companion on representing disagreement without collapsing into relativism, stereotyping, or false balance.', file: 'pluralistic-values-alignment-episode-5-presentation-deck.pptx', cover: 'pluralistic-values-alignment-episode-5-presentation-deck.jpg', cats: ['companion','deck'], search: 'episode five presentation slides pluralistic' },
+        { kind: 'Episode 6 companion', detail: 'PDF · 16 pages', title: 'Legal Values Alignment & Grounded Constitutional AI — Report', desc: 'How legal authority, reasons, precedent, and public institutions can ground auditable AI behavior.', file: 'legal-values-alignment-episode-6-companion-report.pdf', cover: 'legal-values-alignment-episode-6-companion-report.jpg', cats: ['companion'], search: 'episode six report legal grounded constitutional' },
+        { kind: 'Episode 6 companion', detail: 'PowerPoint · 16 slides', title: 'Legal Values Alignment & Grounded Constitutional AI — Deck', desc: 'The presentation companion to Episode 6, from legal sources and institutional grounding to implementation and audit.', file: 'legal-values-alignment-episode-6-presentation-deck.pptx', cover: 'legal-values-alignment-episode-6-presentation-deck.jpg', cats: ['companion','deck'], search: 'episode six presentation slides legal constitutional' },
+
+        { kind: 'Research report', detail: 'PDF · 20 pages', title: 'Values Alignment: Comprehensive Research Report', desc: 'A structured synthesis of recent advances, from value representation and behavioral leakage to grounded constitutional methods and multi-agent alignment.', file: 'values-alignment-comprehensive-research-report.pdf', cover: 'values-alignment-comprehensive-research-report.jpg', cats: ['research'], search: 'evidence conceptual architectures agentic systems' },
+        { kind: 'Presentation', detail: 'PowerPoint · 21 slides', title: 'Values Alignment: The 2025–2026 Research Frontier', desc: 'A presentation-ready tour of NeVA, value leakage, grounded constitutional AI, multi-agent alignment, managed diversity, and evolving norms.', file: 'values-alignment-slide-deck.pptx', cover: 'values-alignment-slide-deck.jpg', cats: ['research','deck'], search: 'research frontier NeVA managed diversity presentation' },
+        { kind: 'Keynote deck', detail: 'PowerPoint · 32 slides', title: 'Values Alignment — Keynote Presentation', desc: 'The extended keynote deck for presenting the values-alignment research program, findings, implications, and open agenda.', file: 'values-alignment-keynote-deck.pptx', cover: 'values-alignment-keynote-deck.jpg', cats: ['research','deck'], search: 'keynote extended presentation values alignment' },
+        { kind: 'Annotated bibliography', detail: 'PDF · 13 pages', title: 'Values Alignment: Recent Academic Publications', desc: 'Twenty-one recent publications on pluralistic methods, structural evaluation, agentic systems, governance, and the gap between stated values and behavior.', file: 'annotated-bibliography-values-alignment.pdf', cover: 'annotated-bibliography-values-alignment.jpg', cats: ['research'], search: 'papers scholarly academic publications' },
+        { kind: 'Review bibliography', detail: 'PDF · 20 pages', title: 'Values Alignment: Review Articles from the Last Year', desc: 'Twelve reviews across socio-technical process, pluralism, governance, evaluation, and value learning, with reading priorities and limitations.', file: 'values-alignment-reviews-bibliography.pdf', cover: 'values-alignment-reviews-bibliography.jpg', cats: ['research'], search: 'literature review survey articles bibliography' },
+        { kind: 'Conference guide', detail: 'PDF · 14 pages', title: 'Values Alignment: Conferences & Workshops', desc: 'Six venues and 13 papers with dates, locations, sponsors, paraphrased abstracts, summaries, and a cross-venue synthesis.', file: 'values-alignment-conferences-workshops.pdf', cover: 'values-alignment-conferences-workshops.jpg', cats: ['research'], search: 'venues papers conferences workshops sponsors' },
+        { kind: 'Review bibliography', detail: 'PDF · 17 pages', title: 'AI Governance: Review Articles from the Last Year', desc: 'Twenty-one review articles and review-led papers organized into eight thematic clusters, with methods, findings, limitations, and source links.', file: 'ai-governance-reviews-bibliography.pdf', cover: 'ai-governance-reviews-bibliography.jpg', cats: ['research'], search: 'governance literature reviews evidence map' },
+        { kind: 'Conference guide', detail: 'PDF · 17 pages', title: 'AI Governance: Conferences & Workshops', desc: 'Seven venues and 35 selected works, with dates, locations, sponsoring organizations, abstracts, summaries, and a cross-conference synthesis.', file: 'ai-governance-conferences-workshops.pdf', cover: 'ai-governance-conferences-workshops.jpg', cats: ['research'], search: 'governance conferences workshops venues papers' },
+        { kind: 'Evaluation report', detail: 'PDF · 21 pages', title: 'From Principles to Benchmarks', desc: 'A validity-centered method for turning values, ethical principles, constitutions, rights frameworks, and stakeholder preferences into auditable evaluations.', file: 'principles-to-benchmarks-report.pdf', cover: 'principles-to-benchmarks-report.jpg', cats: ['research'], search: 'benchmark evaluation measurable values validity' }
+      ];
+
+      var activeFilter = 'all';
+      var search = document.getElementById('search');
+      var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+      var library = document.getElementById('library');
+      var count = document.getElementById('count');
+      var title = document.getElementById('section-title');
+      var empty = document.getElementById('empty');
+      var names = { all: 'All deliverables', podcast: 'Podcasts', companion: 'Episode companions', research: 'Research library', gemini: 'Gemini collection', 'gemini-source': 'Gemini source reports', 'gemini-bib': 'Gemini annotated bibliographies', 'gemini-deck': 'Gemini presentation decks', planning: 'Tax & property planning', deck: 'Presentation decks' };
+      var openIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>';
+      var downIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0 5-5m-5 5-5-5M5 21h14"/></svg>';
+
+      function element(tag, className, text) {
+        var node = document.createElement(tag);
+        if (className) node.className = className;
+        if (typeof text === 'string') node.textContent = text;
+        return node;
+      }
+
+      function renderCard(item) {
+        var article = element('article', 'item' + (item.cats.indexOf('podcast') !== -1 ? ' podcast' : ''));
+        article.setAttribute('data-category', item.cats.join(' '));
+        article.setAttribute('data-search', (item.title + ' ' + item.desc + ' ' + item.kind + ' ' + item.detail + ' ' + item.search).toLowerCase());
+
+        var coverWrap = element('div', 'cover-wrap');
+        var img = element('img', 'cover');
+        img.src = 'assets/covers/' + item.cover;
+        img.alt = 'Cover for ' + item.title;
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        coverWrap.appendChild(img);
+        article.appendChild(coverWrap);
+
+        var body = element('div', 'item-body');
+        var meta = element('div', 'meta');
+        meta.appendChild(element('span', 'type', item.kind));
+        meta.appendChild(element('span', 'dot', item.detail));
+        body.appendChild(meta);
+        body.appendChild(element('h3', '', item.title));
+        body.appendChild(element('p', '', item.desc));
+
+        if (item.cats.indexOf('podcast') !== -1) {
+          var audio = document.createElement('audio');
+          audio.controls = true;
+          audio.preload = 'none';
+          audio.src = 'assets/' + item.file;
+          audio.textContent = 'Embedded audio is not supported by this browser.';
+          body.appendChild(audio);
+        }
+
+        var actions = element('div', 'actions');
+        if (/\.pdf$/i.test(item.file)) {
+          var open = element('a', 'action primary', 'Open PDF');
+          open.href = 'assets/' + item.file;
+          open.target = '_blank';
+          open.rel = 'noopener';
+          open.insertAdjacentHTML('beforeend', openIcon);
+          actions.appendChild(open);
+        }
+        var download = element('a', 'action' + (/\.pdf$/i.test(item.file) ? ' secondary' : ' primary'), /\.pptx$/i.test(item.file) ? 'Download deck' : (/\.mp3$/i.test(item.file) ? 'Download MP3' : 'Download'));
+        download.href = 'assets/' + item.file;
+        download.download = '';
+        download.insertAdjacentHTML('beforeend', downIcon);
+        actions.appendChild(download);
+        body.appendChild(actions);
+        article.appendChild(body);
+        return article;
+      }
+
+      items.forEach(function (item) { library.appendChild(renderCard(item)); });
+      var cards = Array.prototype.slice.call(library.querySelectorAll('.item'));
+
+      function update() {
+        var query = search.value.trim().toLowerCase();
+        var visible = 0;
+        cards.forEach(function (card) {
+          var categories = card.getAttribute('data-category').split(' ');
+          var filterMatch = activeFilter === 'all' || categories.indexOf(activeFilter) !== -1;
+          var searchMatch = !query || card.getAttribute('data-search').indexOf(query) !== -1;
+          var show = filterMatch && searchMatch;
+          card.hidden = !show;
+          if (show) visible += 1;
+        });
+        title.textContent = names[activeFilter];
+        count.textContent = visible + (visible === 1 ? ' item' : ' items');
+        empty.classList.toggle('visible', visible === 0);
+      }
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          activeFilter = tab.getAttribute('data-filter');
+          tabs.forEach(function (other) { other.setAttribute('aria-selected', other === tab ? 'true' : 'false'); });
+          update();
+        });
+      });
+      search.addEventListener('input', update);
+
+      document.getElementById('copy-feed').addEventListener('click', function () {
+        var status = document.getElementById('copy-status');
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(feedUrl).then(function () { status.textContent = 'Feed URL copied.'; }, function () { status.textContent = 'Copy failed. Use Open RSS and copy the address.'; });
+        } else {
+          status.textContent = 'Copy is unavailable here. Use Open RSS and copy the address.';
+        }
+      });
+      update();
+    })();
+  </script>
+</body>
+</html>
